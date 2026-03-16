@@ -192,6 +192,90 @@
             }
         }
     </script>
+
+    <script type="module">
+  // Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: "AIzaSyDJGYkWUZmi1rT7drAZJgm4oiFi5wHRtWk",
+  authDomain: "epilepsia-martin.firebaseapp.com",
+  databaseURL: "https://epilepsia-martin-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "epilepsia-martin",
+  storageBucket: "epilepsia-martin.firebasestorage.app",
+  messagingSenderId: "988535259077",
+  appId: "1:988535259077:web:78dc0daab77f9f9631d5ac",
+  measurementId: "G-K1QXM5WQ4M"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
+
+  // Activar mode offline
+  enableIndexedDbPersistence(db).catch((err) => console.error("Mode offline fallat:", err));
+
+  // Referències UI Autenticació
+  const viewAuth = document.getElementById('view-auth');
+  const viewRegister = document.getElementById('view-register');
+  const mainHeader = document.querySelector('header');
+  const emailInput = document.getElementById('auth-email');
+  const passwordInput = document.getElementById('auth-password');
+  const errorMsg = document.getElementById('auth-error');
+
+  // Funcions globals per a que el teu app.js les pugui utilitzar
+  window.currentUserUid = null;
+
+  window.saveSeizureToFirebase = async function(data) {
+      if (!window.currentUserUid) return;
+      try {
+          // Guardem dins d'una subcol·lecció privada per a cada usuari
+          await addDoc(collection(db, "users", window.currentUserUid, "seizures"), data);
+      } catch (e) {
+          console.error("Error guardant a Firebase: ", e);
+      }
+  };
+
+  // Lògica de Login/Registre UI
+  document.getElementById('btn-login').addEventListener('click', () => {
+      signInWithEmailAndPassword(auth, emailInput.value, passwordInput.value)
+          .catch(error => mostrarError(error.message));
+  });
+
+  document.getElementById('btn-register').addEventListener('click', () => {
+      createUserWithEmailAndPassword(auth, emailInput.value, passwordInput.value)
+          .catch(error => mostrarError(error.message));
+  });
+
+  function mostrarError(msg) {
+      errorMsg.innerText = "Error: Comprova el correu i la contrasenya (mínim 6 caràcters).";
+      errorMsg.classList.remove('hidden');
+  }
+
+  // Escoltador d'estat de sessió (El vigilant)
+  onAuthStateChanged(auth, (user) => {
+      if (user) {
+          // Usuari ha entrat
+          window.currentUserUid = user.uid;
+          viewAuth.classList.add('hidden');
+          mainHeader.classList.remove('hidden');
+          viewRegister.classList.remove('hidden');
+          mainHeader.classList.add('flex'); // Recupera el format flex de Tailwind
+      } else {
+          // Usuari ha sortit
+          window.currentUserUid = null;
+          viewAuth.classList.remove('hidden');
+          mainHeader.classList.add('hidden');
+          viewRegister.classList.add('hidden');
+          document.getElementById('view-history').classList.add('hidden');
+      }
+  });
+</script>
 </body>
 
 </html>
