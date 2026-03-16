@@ -57,6 +57,16 @@ intensityButtons.forEach(btn => {
 });
 
 btnSave.addEventListener('click', () => {
+
+    // Guardar a LocalStorage (backup ràpid)
+    saveToLocal(currentSeizureData);
+    
+    // NOU: Enviar a Firebase de forma segura
+    if (window.saveSeizureToFirebase) {
+        window.saveSeizureToFirebase(currentSeizureData);
+    }
+    
+    closeModal();
     if (!currentSeizureData.intensity) {
         alert('Si us plau, selecciona una intensitat per poder registrar-ho.');
         return;
