@@ -32,22 +32,45 @@
 
 <body class="min-h-screen flex flex-col font-sans antialiased">
 
-    <header class="p-4 bg-slate-800 shadow-md flex justify-between items-center">
-        <div>
-            <p class="text-sm text-slate-400">Tractament Actual</p>
-            <h1 class="text-xl font-semibold text-indigo-300" id="current-treatment">Keppra 500mg</h1>
-        </div>
-        <button
-            class="p-3 bg-slate-700 rounded-lg text-sm hover:bg-slate-600 transition-colors duration-300">Ajustos</button>
-    </header>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-    <main class="flex-1 flex items-center justify-center p-6">
-        <button id="btn-log-seizure"
-            class="no-select w-64 h-64 rounded-full bg-indigo-600 flex flex-col items-center justify-center shadow-lg shadow-indigo-900/50 transition-colors duration-300 hover:bg-indigo-500 active:bg-indigo-700 focus:outline-none focus:ring-4 focus:ring-indigo-400">
-            <span class="text-4xl block mb-2">⚡</span>
-            <span class="text-2xl font-bold">Registrar Crisi</span>
-        </button>
-    </main>
+<header class="p-4 bg-slate-800 shadow-md flex justify-between items-center">
+    <div>
+        <p class="text-sm text-slate-400">Tractament Actual</p>
+        <h1 class="text-xl font-semibold text-indigo-300" id="current-treatment">Keppra 500mg</h1>
+    </div>
+    <div class="flex gap-2">
+        <button id="btn-tab-register" class="px-4 py-2 bg-indigo-600 rounded-lg text-sm font-semibold transition-colors duration-300">Registre</button>
+        <button id="btn-tab-history" class="px-4 py-2 bg-slate-700 rounded-lg text-sm font-semibold hover:bg-slate-600 transition-colors duration-300">Historial</button>
+    </div>
+</header>
+
+<main id="view-register" class="flex-1 flex items-center justify-center p-6">
+    <button id="btn-log-seizure" class="no-select w-64 h-64 rounded-full bg-indigo-600 flex flex-col items-center justify-center shadow-lg shadow-indigo-900/50 transition-colors duration-300 hover:bg-indigo-500 active:bg-indigo-700 focus:outline-none focus:ring-4 focus:ring-indigo-400">
+        <span class="text-4xl block mb-2">⚡</span>
+        <span class="text-2xl font-bold">Registrar Crisi</span>
+    </button>
+</main>
+
+<main id="view-history" class="hidden flex-1 p-6 flex-col gap-6 max-w-4xl mx-auto w-full fade-in">
+    <h2 class="text-2xl font-bold text-slate-100">Informes i Evolució</h2>
+    
+    <div class="bg-slate-800 p-5 rounded-2xl shadow-lg border border-slate-700">
+        <h3 class="text-lg font-semibold text-slate-300 mb-4">Freqüència segons Tractament</h3>
+        <div class="relative h-64 w-full">
+            <canvas id="seizureChart"></canvas>
+        </div>
+    </div>
+
+    <div class="bg-slate-800 p-5 rounded-2xl shadow-lg border border-slate-700 flex-1 flex flex-col">
+        <div class="flex justify-between items-center mb-4">
+            <h3 class="text-lg font-semibold text-slate-300">Últims Registres</h3>
+            <button id="btn-export" class="px-4 py-2 bg-slate-700 text-sm font-semibold rounded-lg hover:bg-slate-600 transition-colors">Exportar CSV</button>
+        </div>
+        <ul id="history-list" class="space-y-3 overflow-y-auto pr-2 max-h-72">
+            </ul>
+    </div>
+</main>
 
     <div id="modal-seizure"
         class="fixed inset-0 bg-slate-900/95 flex items-center justify-center p-4 fade-in pointer-events-none z-50">
