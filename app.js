@@ -57,16 +57,6 @@ intensityButtons.forEach(btn => {
 });
 
 btnSave.addEventListener('click', () => {
-
-    // Guardar a LocalStorage (backup ràpid)
-    saveToLocal(currentSeizureData);
-    
-    // NOU: Enviar a Firebase de forma segura
-    if (window.saveSeizureToFirebase) {
-        window.saveSeizureToFirebase(currentSeizureData);
-    }
-    
-    closeModal();
     if (!currentSeizureData.intensity) {
         alert('Si us plau, selecciona una intensitat per poder registrar-ho.');
         return;
@@ -74,12 +64,15 @@ btnSave.addEventListener('click', () => {
     
     currentSeizureData.notes = notesInput.value;
     
-    // Guardar a LocalStorage (Com a pas previ o backup de Firebase)
+    // 1. Guardar a LocalStorage (el backup offline que ja teníem)
     saveToLocal(currentSeizureData);
     
-    // Aquí cridarem a Firebase més endavant
-    // syncWithFirebase(currentSeizureData);
+    // 2. NOU: Guardar al núvol de Firebase (AQUÍ ÉS ON VA!)
+    if (window.saveSeizureToFirebase) {
+        window.saveSeizureToFirebase(currentSeizureData);
+    }
     
+    // 3. Tancar la finestra
     closeModal();
 });
 
