@@ -34,66 +34,81 @@
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-<header class="p-4 bg-slate-800 shadow-md flex justify-between items-center">
-    <div id="btn-settings" class="cursor-pointer hover:opacity-80 transition-opacity bg-slate-800/50 p-2 -ml-2 rounded-lg" title="Canviar tractament">
-    <p class="text-sm text-slate-400 flex items-center gap-2">Tractament Actual <span class="text-lg">⚙️</span></p>
-    <h1 class="text-xl font-semibold text-indigo-300" id="current-treatment">Carregant...</h1>
-</div>
-    <div class="flex gap-2">
-        <button id="btn-tab-register" class="px-4 py-2 bg-indigo-600 rounded-lg text-sm font-semibold transition-colors duration-300">Registre</button>
-        <button id="btn-tab-history" class="px-4 py-2 bg-slate-700 rounded-lg text-sm font-semibold hover:bg-slate-600 transition-colors duration-300">Historial</button>
-    </div>
-</header>
-<main id="view-auth" class="flex-1 flex flex-col items-center justify-center p-6 w-full max-w-md mx-auto z-40 bg-slate-900 absolute inset-0">
-    <div class="w-full bg-slate-800 p-8 rounded-2xl shadow-2xl border border-slate-700">
-        <h2 class="text-3xl font-bold text-center text-slate-100 mb-8">Benvingut</h2>
-        
-        <div class="space-y-4">
-            <div>
-                <label class="block mb-2 text-lg text-slate-300">Correu electrònic</label>
-                <input type="email" id="auth-email" class="w-full bg-slate-900 text-slate-200 rounded-xl p-4 border border-slate-600 focus:border-indigo-500 focus:outline-none text-lg">
-            </div>
-            
-            <div>
-                <label class="block mb-2 text-lg text-slate-300">Contrasenya</label>
-                <input type="password" id="auth-password" class="w-full bg-slate-900 text-slate-200 rounded-xl p-4 border border-slate-600 focus:border-indigo-500 focus:outline-none text-lg">
-            </div>
+    <header class="p-4 bg-slate-800 shadow-md flex justify-between items-center">
+        <div id="btn-settings"
+            class="cursor-pointer hover:opacity-80 transition-opacity bg-slate-800/50 p-2 -ml-2 rounded-lg"
+            title="Canviar tractament">
+            <p class="text-sm text-slate-400 flex items-center gap-2">Tractament Actual <span class="text-lg">⚙️</span>
+            </p>
+            <h1 class="text-xl font-semibold text-indigo-300" id="current-treatment">Carregant...</h1>
+        </div>
+        <div class="flex gap-2">
+            <button id="btn-tab-register"
+                class="px-4 py-2 bg-indigo-600 rounded-lg text-sm font-semibold transition-colors duration-300">Registre</button>
+            <button id="btn-tab-history"
+                class="px-4 py-2 bg-slate-700 rounded-lg text-sm font-semibold hover:bg-slate-600 transition-colors duration-300">Historial</button>
+        </div>
+    </header>
+    <main id="view-auth"
+        class="flex-1 flex flex-col items-center justify-center p-6 w-full max-w-md mx-auto z-40 bg-slate-900 absolute inset-0">
+        <div class="w-full bg-slate-800 p-8 rounded-2xl shadow-2xl border border-slate-700">
+            <h2 class="text-3xl font-bold text-center text-slate-100 mb-8">Benvingut</h2>
 
-            <p id="auth-error" class="text-red-400 text-sm hidden font-semibold"></p>
+            <div class="space-y-4">
+                <div>
+                    <label class="block mb-2 text-lg text-slate-300">Correu electrònic</label>
+                    <input type="email" id="auth-email"
+                        class="w-full bg-slate-900 text-slate-200 rounded-xl p-4 border border-slate-600 focus:border-indigo-500 focus:outline-none text-lg">
+                </div>
 
-            <div class="flex flex-col gap-3 mt-6">
-                <button id="btn-login" class="w-full py-4 bg-indigo-600 rounded-xl text-lg font-bold transition-colors duration-300 hover:bg-indigo-500">Iniciar Sessió</button>
-                <button id="btn-register" class="w-full py-4 bg-slate-700 rounded-xl text-lg font-bold transition-colors duration-300 hover:bg-slate-600 text-indigo-300">Crear Nou Compte</button>
+                <div>
+                    <label class="block mb-2 text-lg text-slate-300">Contrasenya</label>
+                    <input type="password" id="auth-password"
+                        class="w-full bg-slate-900 text-slate-200 rounded-xl p-4 border border-slate-600 focus:border-indigo-500 focus:outline-none text-lg">
+                </div>
+
+                <p id="auth-error" class="text-red-400 text-sm hidden font-semibold"></p>
+
+                <div class="flex flex-col gap-3 mt-6">
+                    <button id="btn-login"
+                        class="w-full py-4 bg-indigo-600 rounded-xl text-lg font-bold transition-colors duration-300 hover:bg-indigo-500">Iniciar
+                        Sessió</button>
+                    <button id="btn-register"
+                        class="w-full py-4 bg-slate-700 rounded-xl text-lg font-bold transition-colors duration-300 hover:bg-slate-600 text-indigo-300">Crear
+                        Nou Compte</button>
+                </div>
             </div>
         </div>
-    </div>
-</main>
-<main id="view-register" class="flex-1 flex items-center justify-center p-6">
-    <button id="btn-log-seizure" class="no-select w-64 h-64 rounded-full bg-indigo-600 flex flex-col items-center justify-center shadow-lg shadow-indigo-900/50 transition-colors duration-300 hover:bg-indigo-500 active:bg-indigo-700 focus:outline-none focus:ring-4 focus:ring-indigo-400">
-        <span class="text-4xl block mb-2">⚡</span>
-        <span class="text-2xl font-bold">Registrar Crisi</span>
-    </button>
-</main>
+    </main>
+    <main id="view-register" class="flex-1 flex items-center justify-center p-6">
+        <button id="btn-log-seizure"
+            class="no-select w-64 h-64 rounded-full bg-indigo-600 flex flex-col items-center justify-center shadow-lg shadow-indigo-900/50 transition-colors duration-300 hover:bg-indigo-500 active:bg-indigo-700 focus:outline-none focus:ring-4 focus:ring-indigo-400">
+            <span class="text-4xl block mb-2">⚡</span>
+            <span class="text-2xl font-bold">Registrar Crisi</span>
+        </button>
+    </main>
 
-<main id="view-history" class="hidden flex-1 p-6 flex-col gap-6 max-w-4xl mx-auto w-full fade-in">
-    <h2 class="text-2xl font-bold text-slate-100">Informes i Evolució</h2>
-    
-    <div class="bg-slate-800 p-5 rounded-2xl shadow-lg border border-slate-700">
-        <h3 class="text-lg font-semibold text-slate-300 mb-4">Freqüència segons Tractament</h3>
-        <div class="relative h-64 w-full">
-            <canvas id="seizureChart"></canvas>
-        </div>
-    </div>
+    <main id="view-history" class="hidden flex-1 p-6 flex-col gap-6 max-w-4xl mx-auto w-full fade-in">
+        <h2 class="text-2xl font-bold text-slate-100">Informes i Evolució</h2>
 
-    <div class="bg-slate-800 p-5 rounded-2xl shadow-lg border border-slate-700 flex-1 flex flex-col">
-        <div class="flex justify-between items-center mb-4">
-            <h3 class="text-lg font-semibold text-slate-300">Últims Registres</h3>
-            <button id="btn-export" class="px-4 py-2 bg-slate-700 text-sm font-semibold rounded-lg hover:bg-slate-600 transition-colors">Exportar CSV</button>
+        <div class="bg-slate-800 p-5 rounded-2xl shadow-lg border border-slate-700">
+            <h3 class="text-lg font-semibold text-slate-300 mb-4">Freqüència segons Tractament</h3>
+            <div class="relative h-64 w-full">
+                <canvas id="seizureChart"></canvas>
+            </div>
         </div>
-        <ul id="history-list" class="space-y-3 overflow-y-auto pr-2 max-h-72">
+
+        <div class="bg-slate-800 p-5 rounded-2xl shadow-lg border border-slate-700 flex-1 flex flex-col">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-lg font-semibold text-slate-300">Últims Registres</h3>
+                <button id="btn-export"
+                    class="px-4 py-2 bg-slate-700 text-sm font-semibold rounded-lg hover:bg-slate-600 transition-colors">Exportar
+                    CSV</button>
+            </div>
+            <ul id="history-list" class="space-y-3 overflow-y-auto pr-2 max-h-72">
             </ul>
-    </div>
-</main>
+        </div>
+    </main>
 
     <div id="modal-seizure"
         class="fixed inset-0 bg-slate-900/95 flex items-center justify-center p-4 fade-in pointer-events-none z-50">
@@ -137,144 +152,108 @@
         </div>
     </div>
 
-    <div id="modal-settings" class="fixed inset-0 bg-slate-900/95 flex items-center justify-center p-4 fade-in pointer-events-none z-50">
-    <div class="bg-slate-800 rounded-2xl w-full max-w-md p-6 shadow-2xl flex flex-col gap-6">
-        <h2 class="text-2xl font-bold text-center text-slate-100">Ajustos del Pacient</h2>
-        
-        <div>
-            <label class="block mb-2 text-lg text-slate-300">Quin tractament prens ara?</label>
-            <input type="text" id="input-treatment" placeholder="Ex: Keppra 500mg, Depakine..." class="w-full bg-slate-900 text-slate-200 rounded-xl p-4 border border-slate-600 focus:border-indigo-500 focus:outline-none transition-colors duration-300 text-lg">
-            <p class="mt-3 text-sm text-slate-400">Les noves crisis que registris s'associaran automàticament a aquest medicament per als informes.</p>
-        </div>
+    <div id="modal-settings"
+        class="fixed inset-0 bg-slate-900/95 flex items-center justify-center p-4 fade-in pointer-events-none z-50">
+        <div class="bg-slate-800 rounded-2xl w-full max-w-md p-6 shadow-2xl flex flex-col gap-6">
+            <h2 class="text-2xl font-bold text-center text-slate-100">Ajustos del Pacient</h2>
 
-        <div class="flex gap-4 mt-2">
-            <button id="btn-cancel-settings" class="flex-1 py-4 bg-slate-600 rounded-xl text-lg font-semibold transition-colors duration-300 hover:bg-slate-500">Tancar</button>
-            <button id="btn-save-settings" class="flex-1 py-4 bg-indigo-600 rounded-xl text-lg font-semibold transition-colors duration-300 hover:bg-indigo-500">Desar</button>
+            <div>
+                <label class="block mb-2 text-lg text-slate-300">Quin tractament prens ara?</label>
+                <input type="text" id="input-treatment" placeholder="Ex: Keppra 500mg, Depakine..."
+                    class="w-full bg-slate-900 text-slate-200 rounded-xl p-4 border border-slate-600 focus:border-indigo-500 focus:outline-none transition-colors duration-300 text-lg">
+                <p class="mt-3 text-sm text-slate-400">Les noves crisis que registris s'associaran automàticament a
+                    aquest medicament per als informes.</p>
+            </div>
+
+            <div class="flex gap-4 mt-2">
+                <button id="btn-cancel-settings"
+                    class="flex-1 py-4 bg-slate-600 rounded-xl text-lg font-semibold transition-colors duration-300 hover:bg-slate-500">Tancar</button>
+                <button id="btn-save-settings"
+                    class="flex-1 py-4 bg-indigo-600 rounded-xl text-lg font-semibold transition-colors duration-300 hover:bg-indigo-500">Desar</button>
+            </div>
         </div>
     </div>
-</div>
     <script src="app.js"></script>
 
     <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getFirestore, enableIndexedDbPersistence, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-        import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getFirestore, enableIndexedDbPersistence, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
-        const firebaseConfig = {
-            apiKey: "LA_TEVA_API_KEY",
-            authDomain: "EL_TEU_PROJECTE.firebaseapp.com",
-            projectId: "EL_TEU_PROJECTE",
-            // ... resta de configuració de Firebase
-        };
+    // La teva configuració real de Firebase
+    const firebaseConfig = {
+        apiKey: "AIzaSyDJGYkWUZmi1rT7drAZJgm4oiFi5wHRtWk",
+        authDomain: "epilepsia-martin.firebaseapp.com",
+        databaseURL: "https://epilepsia-martin-default-rtdb.europe-west1.firebasedatabase.app",
+        projectId: "epilepsia-martin",
+        storageBucket: "epilepsia-martin.firebasestorage.app",
+        messagingSenderId: "988535259077",
+        appId: "1:988535259077:web:78dc0daab77f9f9631d5ac",
+        measurementId: "G-K1QXM5WQ4M"
+    };
 
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
-        const auth = getAuth(app);
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const auth = getAuth(app);
 
-        // Activar persistència Offline (CRÍTIC PER PWA)
-        enableIndexedDbPersistence(db).catch((err) => {
-            console.error("Error activant offline mode:", err);
-        });
+    // Activar mode offline
+    enableIndexedDbPersistence(db).catch((err) => console.error("Mode offline fallat:", err));
 
-        // Login anònim per començar fàcil (després pots afegir Google/Email)
-        signInAnonymously(auth).then(() => {
-            console.log("Usuari autenticat");
-        });
+    // Referències UI Autenticació
+    const viewAuth = document.getElementById('view-auth');
+    const viewRegister = document.getElementById('view-register');
+    const mainHeader = document.querySelector('header');
+    const emailInput = document.getElementById('auth-email');
+    const passwordInput = document.getElementById('auth-password');
+    const errorMsg = document.getElementById('auth-error');
 
-        // Exposar la funció de guardat al window per usar-la des de app.js
-        window.saveToFirebase = async function (seizureData) {
-            if (!auth.currentUser) return;
-            try {
-                await addDoc(collection(db, "users", auth.currentUser.uid, "seizures"), seizureData);
-                console.log("Sincronitzat amb Firebase de forma segura!");
-            } catch (e) {
-                console.error("Error afegint document: ", e);
-            }
+    // Funcions globals per a que el teu app.js les pugui utilitzar
+    window.currentUserUid = null;
+
+    window.saveSeizureToFirebase = async function (data) {
+        if (!window.currentUserUid) return;
+        try {
+            await addDoc(collection(db, "users", window.currentUserUid, "seizures"), data);
+            console.log("Guardat correctament al teu núvol privat de Firebase!");
+        } catch (e) {
+            console.error("Error guardant a Firebase: ", e);
         }
-    </script>
+    };
 
-    <script type="module">
-  // Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+    // Lògica de Login/Registre UI
+    document.getElementById('btn-login').addEventListener('click', () => {
+        signInWithEmailAndPassword(auth, emailInput.value, passwordInput.value)
+            .catch(error => mostrarError(error.message));
+    });
 
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
-  apiKey: "AIzaSyDJGYkWUZmi1rT7drAZJgm4oiFi5wHRtWk",
-  authDomain: "epilepsia-martin.firebaseapp.com",
-  databaseURL: "https://epilepsia-martin-default-rtdb.europe-west1.firebasedatabase.app",
-  projectId: "epilepsia-martin",
-  storageBucket: "epilepsia-martin.firebasestorage.app",
-  messagingSenderId: "988535259077",
-  appId: "1:988535259077:web:78dc0daab77f9f9631d5ac",
-  measurementId: "G-K1QXM5WQ4M"
-};
+    document.getElementById('btn-register').addEventListener('click', () => {
+        createUserWithEmailAndPassword(auth, emailInput.value, passwordInput.value)
+            .catch(error => mostrarError(error.message));
+    });
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+    function mostrarError(msg) {
+        errorMsg.innerText = "Error: Comprova el correu i la contrasenya (mínim 6 caràcters).";
+        errorMsg.classList.remove('hidden');
+    }
 
-  // Activar mode offline
-  enableIndexedDbPersistence(db).catch((err) => console.error("Mode offline fallat:", err));
-
-  // Referències UI Autenticació
-  const viewAuth = document.getElementById('view-auth');
-  const viewRegister = document.getElementById('view-register');
-  const mainHeader = document.querySelector('header');
-  const emailInput = document.getElementById('auth-email');
-  const passwordInput = document.getElementById('auth-password');
-  const errorMsg = document.getElementById('auth-error');
-
-  // Funcions globals per a que el teu app.js les pugui utilitzar
-  window.currentUserUid = null;
-
-  window.saveSeizureToFirebase = async function(data) {
-      if (!window.currentUserUid) return;
-      try {
-          // Guardem dins d'una subcol·lecció privada per a cada usuari
-          await addDoc(collection(db, "users", window.currentUserUid, "seizures"), data);
-      } catch (e) {
-          console.error("Error guardant a Firebase: ", e);
-      }
-  };
-
-  // Lògica de Login/Registre UI
-  document.getElementById('btn-login').addEventListener('click', () => {
-      signInWithEmailAndPassword(auth, emailInput.value, passwordInput.value)
-          .catch(error => mostrarError(error.message));
-  });
-
-  document.getElementById('btn-register').addEventListener('click', () => {
-      createUserWithEmailAndPassword(auth, emailInput.value, passwordInput.value)
-          .catch(error => mostrarError(error.message));
-  });
-
-  function mostrarError(msg) {
-      errorMsg.innerText = "Error: Comprova el correu i la contrasenya (mínim 6 caràcters).";
-      errorMsg.classList.remove('hidden');
-  }
-
-  // Escoltador d'estat de sessió (El vigilant)
-  onAuthStateChanged(auth, (user) => {
-      if (user) {
-          // Usuari ha entrat
-          window.currentUserUid = user.uid;
-          viewAuth.classList.add('hidden');
-          mainHeader.classList.remove('hidden');
-          viewRegister.classList.remove('hidden');
-          mainHeader.classList.add('flex'); // Recupera el format flex de Tailwind
-      } else {
-          // Usuari ha sortit
-          window.currentUserUid = null;
-          viewAuth.classList.remove('hidden');
-          mainHeader.classList.add('hidden');
-          viewRegister.classList.add('hidden');
-          document.getElementById('view-history').classList.add('hidden');
-      }
-  });
+    // Escoltador d'estat de sessió (El vigilant)
+    onAuthStateChanged(auth, (user) => {
+        if (user) {
+            // Usuari ha entrat
+            window.currentUserUid = user.uid;
+            viewAuth.classList.add('hidden');
+            mainHeader.classList.remove('hidden');
+            viewRegister.classList.remove('hidden');
+            mainHeader.classList.add('flex'); // Recupera el format flex de Tailwind
+        } else {
+            // Usuari ha sortit
+            window.currentUserUid = null;
+            viewAuth.classList.remove('hidden');
+            mainHeader.classList.add('hidden');
+            viewRegister.classList.add('hidden');
+            document.getElementById('view-history').classList.add('hidden');
+        }
+    });
 </script>
 </body>
 
