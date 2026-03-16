@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="ca" class="bg-slate-900 text-slate-200">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Registre de Salut</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .fade-in {
+            opacity: 0;
+            transition: opacity 0.4s ease-in-out;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+        }
+
+        /* Evitar selecció de text accidental en clicar botons */
+        .no-select {
+            user-select: none;
+            -webkit-user-select: none;
+        }
+    </style>
+    <link rel="manifest" href="manifest.json">
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js');
+        }
+    </script>
+</head>
+
+<body class="min-h-screen flex flex-col font-sans antialiased">
+
+    <header class="p-4 bg-slate-800 shadow-md flex justify-between items-center">
+        <div>
+            <p class="text-sm text-slate-400">Tractament Actual</p>
+            <h1 class="text-xl font-semibold text-indigo-300" id="current-treatment">Keppra 500mg</h1>
+        </div>
+        <button
+            class="p-3 bg-slate-700 rounded-lg text-sm hover:bg-slate-600 transition-colors duration-300">Ajustos</button>
+    </header>
+
+    <main class="flex-1 flex items-center justify-center p-6">
+        <button id="btn-log-seizure"
+            class="no-select w-64 h-64 rounded-full bg-indigo-600 flex flex-col items-center justify-center shadow-lg shadow-indigo-900/50 transition-colors duration-300 hover:bg-indigo-500 active:bg-indigo-700 focus:outline-none focus:ring-4 focus:ring-indigo-400">
+            <span class="text-4xl block mb-2">⚡</span>
+            <span class="text-2xl font-bold">Registrar Crisi</span>
+        </button>
+    </main>
+
+    <div id="modal-seizure"
+        class="fixed inset-0 bg-slate-900/95 flex items-center justify-center p-4 fade-in pointer-events-none z-50">
+        <div class="bg-slate-800 rounded-2xl w-full max-w-md p-6 shadow-2xl flex flex-col gap-6">
+            <h2 class="text-2xl font-bold text-center">Detalls de la Crisi</h2>
+
+            <div>
+                <p class="mb-3 text-lg text-center">Intensitat (1 al 5)</p>
+                <div class="flex justify-between gap-2" id="intensity-buttons">
+                    <button
+                        class="flex-1 py-4 bg-slate-700 rounded-xl text-xl font-bold hover:bg-indigo-500 transition-colors duration-300"
+                        data-val="1">1</button>
+                    <button
+                        class="flex-1 py-4 bg-slate-700 rounded-xl text-xl font-bold hover:bg-indigo-500 transition-colors duration-300"
+                        data-val="2">2</button>
+                    <button
+                        class="flex-1 py-4 bg-slate-700 rounded-xl text-xl font-bold hover:bg-indigo-500 transition-colors duration-300"
+                        data-val="3">3</button>
+                    <button
+                        class="flex-1 py-4 bg-slate-700 rounded-xl text-xl font-bold hover:bg-indigo-500 transition-colors duration-300"
+                        data-val="4">4</button>
+                    <button
+                        class="flex-1 py-4 bg-slate-700 rounded-xl text-xl font-bold hover:bg-indigo-500 transition-colors duration-300"
+                        data-val="5">5</button>
+                </div>
+            </div>
+
+            <div>
+                <label class="block mb-2 text-lg">Símptomes o notes (Opcional)</label>
+                <textarea id="seizure-notes" rows="3"
+                    class="w-full bg-slate-900 text-slate-200 rounded-xl p-4 border border-slate-600 focus:border-indigo-500 focus:outline-none transition-colors duration-300 text-lg"></textarea>
+            </div>
+
+            <div class="flex gap-4 mt-2">
+                <button id="btn-cancel"
+                    class="flex-1 py-4 bg-slate-600 rounded-xl text-lg font-semibold transition-colors duration-300">Cancel·lar</button>
+                <button id="btn-save"
+                    class="flex-1 py-4 bg-indigo-600 rounded-xl text-lg font-semibold transition-colors duration-300 disabled:opacity-50">Guardar</button>
+                window.saveToFirebase(currentSeizureData);
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getFirestore, enableIndexedDbPersistence, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "LA_TEVA_API_KEY",
+            authDomain: "EL_TEU_PROJECTE.firebaseapp.com",
+            projectId: "EL_TEU_PROJECTE",
+            // ... resta de configuració de Firebase
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const auth = getAuth(app);
+
+        // Activar persistència Offline (CRÍTIC PER PWA)
+        enableIndexedDbPersistence(db).catch((err) => {
+            console.error("Error activant offline mode:", err);
+        });
+
+        // Login anònim per començar fàcil (després pots afegir Google/Email)
+        signInAnonymously(auth).then(() => {
+            console.log("Usuari autenticat");
+        });
+
+        // Exposar la funció de guardat al window per usar-la des de app.js
+        window.saveToFirebase = async function (seizureData) {
+            if (!auth.currentUser) return;
+            try {
+                await addDoc(collection(db, "users", auth.currentUser.uid, "seizures"), seizureData);
+                console.log("Sincronitzat amb Firebase de forma segura!");
+            } catch (e) {
+                console.error("Error afegint document: ", e);
+            }
+        }
+    </script>
+</body>
+
+</html>
