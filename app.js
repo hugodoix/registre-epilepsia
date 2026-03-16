@@ -268,4 +268,52 @@ btnExport.addEventListener('click', () => {
     link.click();
     document.body.removeChild(link);
 });
+
+    // --- LÒGICA D'AJUSTOS I TRACTAMENT ---
+
+const btnSettings = document.getElementById('btn-settings');
+const modalSettings = document.getElementById('modal-settings');
+const btnCancelSettings = document.getElementById('btn-cancel-settings');
+const btnSaveSettings = document.getElementById('btn-save-settings');
+const inputTreatment = document.getElementById('input-treatment');
+
+// 1. Carregar el tractament guardat en obrir l'app
+let savedTreatment = localStorage.getItem('currentTreatment') || 'Cap tractament definit';
+treatmentDisplay.innerText = savedTreatment;
+currentSeizureData.treatmentAtTime = savedTreatment; // Assignem el tractament actual a les futures crisis
+
+// 2. Obrir el modal d'ajustos
+btnSettings.addEventListener('click', () => {
+    // Omplim l'input amb el valor actual perquè sigui fàcil d'editar
+    inputTreatment.value = savedTreatment === 'Cap tractament definit' ? '' : savedTreatment;
+    
+    modalSettings.classList.remove('pointer-events-none');
+    modalSettings.classList.add('visible');
+    inputTreatment.focus();
+});
+
+// 3. Funció per tancar de forma suau
+function closeSettings() {
+    modalSettings.classList.remove('visible');
+    setTimeout(() => modalSettings.classList.add('pointer-events-none'), 400);
+}
+
+btnCancelSettings.addEventListener('click', closeSettings);
+
+// 4. Guardar el nou tractament
+btnSaveSettings.addEventListener('click', () => {
+    const newTreatment = inputTreatment.value.trim() || 'Cap tractament definit';
+    savedTreatment = newTreatment;
+    
+    // Actualitzem la interfície (Capçalera)
+    treatmentDisplay.innerText = savedTreatment;
+    
+    // Actualitzem les dades que s'enviaran al registrar una crisi
+    currentSeizureData.treatmentAtTime = savedTreatment;
+    
+    // Guardem el tractament a la memòria del telèfon de forma permanent
+    localStorage.setItem('currentTreatment', savedTreatment);
+    
+    closeSettings();
+});
 }
