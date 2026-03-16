@@ -216,4 +216,56 @@ function renderChart(history) {
             }
         }
     });
+
+    // --- LÒGICA D'EXPORTACIÓ A CSV ---
+
+const btnExport = document.getElementById('btn-export');
+
+btnExport.addEventListener('click', () => {
+    // Recuperar dades (de moment de LocalStorage)
+    const history = JSON.parse(localStorage.getItem('seizureHistory')) || [];
+    
+    if (history.length === 0) {
+        alert('No hi ha cap registre per exportar encara.');
+        return;
+    }
+
+    // 1. Crear la capçalera del document CSV
+    let csvContent = "Data,Hora,Intensitat,Tractament,Notes\n";
+
+    // 2. Ordenar les dades cronològicament (del més antic al més recent)
+    const sortedHistory = [...history].sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
+
+    // 3. Processar cada registre
+    sortedHistory.forEach(item => {
+        const dateObj = new Date(item.timestamp);
+        const dateStr = dateObj.toLocaleDateString('ca-ES');
+        const timeStr = dateObj.toLocaleTimeString('ca-ES', { hour: '2-digit', minute:'2-digit' });
+        
+        // Netejar les notes: treure salts de línia i gestionar cometes i comes
+        let safeNotes = item.notes ? item.notes.replace(/"/g, '""').replace(/\n/g, ' ') : '';
+        if (safeNotes.includes(',')) {
+            safeNotes = `"${safeNotes}"`; // Envoltem amb cometes si hi ha comes al text
+        }
+
+        // Afegir la fila al text del CSV
+        const row = `${dateStr},${timeStr},${item.intensity},${item.treatmentAtTime},${safeNotes}`;
+        csvContent += row + "\n";
+    });
+
+    // 4. Crear i descarregar el fitxer
+    // S'afegeix '\ufeff' (BOM) perquè programes com Excel detectin correctament el text UTF-8 (accents, etc.)
+    const blob = new Blob(["\ufeff", csvContent], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    
+    // Creem un enllaç invisible, li fem clic automàticament i l'esborrem
+    const link = document.createElement("a");
+    const avui = new Date().toLocaleDateString('ca-ES').replace(/\//g, '-');
+    
+    link.setAttribute("href", url);
+    link.setAttribute("download", `informe_crisis_${avui}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+});
 }
